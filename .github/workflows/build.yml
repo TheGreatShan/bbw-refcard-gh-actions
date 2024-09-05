@@ -9,7 +9,7 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04 ## Job machine uses specific version, as latest might cause newer ubuntu versions, which might break the code compatibility
         steps:
             - uses: actions/checkout@v4
             - name: Use Node.js
