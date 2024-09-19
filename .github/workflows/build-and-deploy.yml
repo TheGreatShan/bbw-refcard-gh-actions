@@ -4,7 +4,7 @@ on:
         branches:
             - main
 jobs:
-    build:
+    prep:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
@@ -15,11 +15,27 @@ jobs:
                   node-version: '18'
             - name: Install dependencies
               run: npm install
+    lint:
+        runs-on: ubuntu-latest
+        needs: prep
+        steps:
             - name: Lint code
               run: echo "npm run lint"
+    test:
+        runs-on: ubuntu-latest
+        needs: prep
+        steps:
             - name: Run tests
               run: npm run test
+    build:
+        runs-on: ubuntu-latest
+        needs: test
+        steps:
             - name: Build application
               run: npm run build
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
             - name: Deploy application
               run: echo "Deploying application..."
