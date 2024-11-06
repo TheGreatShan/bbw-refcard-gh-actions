@@ -29,15 +29,15 @@ jobs:
     # Build the Docker image
       - name: Build Docker Image
         run: |
-        docker build -t react-app:latest .
+          docker build -t react-app:latest .
 
     # Run the Docker container to test the build
       - name: Run Docker Container
         run: |
-        docker run -d -p 80:80 react-app:latest
+          docker run -d -p 80:80 react-app:latest
 
     # Optionally: Push the Docker image to Docker Hub or any container registry
       - name: Push Docker Image to Docker Hub
         run: |
-        docker tag react-app:latest ${{ secrets.DOCKER_USERNAME }}/react-app:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/react-app:latest
+          docker tag react-app:latest ${{ secrets.DOCKER_USERNAME }}/react-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/react-app:latest
