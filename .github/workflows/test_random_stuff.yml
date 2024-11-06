@@ -1,0 +1,72 @@
+# Name of the workflow as it appears in GitHub
+name: CI Workflow
+
+# Defines the trigger for the workflow, like a push or pull request
+on: 
+  push:
+    branches:
+      - main
+
+# Specifies the jobs to run in the workflow
+jobs:
+  build:
+    # Defines the environment where the job will run
+    runs-on: ubuntu-latest
+
+    # Lists the steps to execute in this job
+    steps:
+      # Refers to an action or repository to use in the workflow
+      - uses: actions/checkout@v2
+
+      # Passes parameters to the action for configuration
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      # Defines environment variables for the job or action
+      - name: Set environment variables
+        env:
+          MY_ENV_VAR: 'Hello, World'
+        run: echo "Environment variable set"
+
+      # Executes a shell command, like running a script or command
+      - name: Run tests
+        run: npm test
+
+      # Condition to execute a step or job based on an expression
+      - name: Deploy
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying application..."
+
+      # Specifies if the job should continue on error
+      - name: Test error handling
+        run: exit 1
+        continue-on-error: true
+
+      # Sets a timeout for the job, in minutes
+      timeout-minutes: 10
+
+  test:
+    # Defines dependencies between jobs to set an order
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run additional tests
+        run: echo "Running additional tests"
+
+    # Allows matrix builds to run multiple job variants
+    strategy:
+      matrix:
+        node: [12, 14, 16]
+
+    # Allows access to secret information like API keys
+    - name: Use Secret Key
+      env:
+        MY_SECRET: ${{ secrets.MY_SECRET_KEY }}
+      run: echo "Using secret key..."
+
+    # Sets permissions for the workflow, such as read/write
+    permissions:
+      contents: write
+      actions: read
