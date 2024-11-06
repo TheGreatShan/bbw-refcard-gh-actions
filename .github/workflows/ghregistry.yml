@@ -39,5 +39,4 @@ jobs:
     # Optionally: Push the Docker image to Docker Hub or any container registry
             - name: Push Docker Image to Docker Hub
               run: |
-                docker tag react-app:latest ghcr.io/thegreatshan/react-app:latest
                 docker push ghcr.io/thegreatshan/react-app:latest
