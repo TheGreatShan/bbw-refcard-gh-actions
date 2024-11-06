@@ -35,8 +35,9 @@ jobs:
             - name: Run Docker Container
               run: |
                 docker run -d -p 80:80 ghcr.io/thegreatshan/react-app:latest
-
-    # Optionally: Push the Docker image to Docker Hub or any container registry
-            - name: Push Docker Image to Docker Hub
-              run: |
-                docker push ghcr.io/thegreatshan/react-app:latest
+            
+            - name: Build and push
+              uses: docker/build-push-action@v6
+              with:
+                push: true
+                tags: ghcr.io/thegreatshan/react-app:latest

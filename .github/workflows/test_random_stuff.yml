@@ -59,7 +59,6 @@ jobs:
     strategy:
       matrix:
         node: [12, 14, 16]
-
     # Allows access to secret information like API keys
     - name: Use Secret Key
       env:
