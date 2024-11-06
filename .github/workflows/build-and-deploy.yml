@@ -37,6 +37,7 @@ jobs:
 
     run-test:
         runs-on: ubuntu-latest
+        needs: setup-environment
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
